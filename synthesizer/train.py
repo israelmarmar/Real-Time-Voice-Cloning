@@ -174,7 +174,7 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
             steps_per_epoch = np.ceil(total_iters / batch_size).astype(np.int32)
             epochs = np.ceil(training_steps / steps_per_epoch).astype(np.int32)
             last_epoch = 1
-            last_step_in_epoch = -1
+            last_step_in_epoch = 0
 
     for epoch in range(last_epoch, epochs+1):
         last_epoch_var = epoch
@@ -286,7 +286,7 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
             # Break out of loop to update training schedule
             if step >= max_step:
                 break
-        last_step_in_epoch = -1
+        last_step_in_epoch = 0
 
         # Add line break after every epoch
         print("")
