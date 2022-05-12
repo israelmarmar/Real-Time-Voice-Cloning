@@ -30,21 +30,21 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
           history_train: Path, hparams):
 
     # Bookkeeping
-        models_dir.mkdir(exist_ok=True)
+    models_dir.mkdir(exist_ok=True)
 
-        model_dir = models_dir.joinpath(run_id)
-        plot_dir = model_dir.joinpath("plots")
-        wav_dir = model_dir.joinpath("wavs")
-        mel_output_dir = model_dir.joinpath("mel-spectrograms")
-        meta_folder = model_dir.joinpath("metas")
-        model_dir.mkdir(exist_ok=True)
-        plot_dir.mkdir(exist_ok=True)
-        wav_dir.mkdir(exist_ok=True)
-        mel_output_dir.mkdir(exist_ok=True)
-        meta_folder.mkdir(exist_ok=True)
+    model_dir = models_dir.joinpath(run_id)
+    plot_dir = model_dir.joinpath("plots")
+    wav_dir = model_dir.joinpath("wavs")
+    mel_output_dir = model_dir.joinpath("mel-spectrograms")
+    meta_folder = model_dir.joinpath("metas")
+    model_dir.mkdir(exist_ok=True)
+    plot_dir.mkdir(exist_ok=True)
+    wav_dir.mkdir(exist_ok=True)
+    mel_output_dir.mkdir(exist_ok=True)
+    meta_folder.mkdir(exist_ok=True)
 
-        weights_fpath = model_dir / f"synthesizer.pt"
-        metadata_fpath = syn_dir.joinpath("train.txt")
+    weights_fpath = model_dir / f"synthesizer.pt"
+    metadata_fpath = syn_dir.joinpath("train.txt")
 
     # From WaveRNN/train_tacotron.py
     if torch.cuda.is_available():
