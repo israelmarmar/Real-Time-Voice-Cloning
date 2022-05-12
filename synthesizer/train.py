@@ -19,6 +19,8 @@ from synthesizer.utils.text import sequence_to_text
 from vocoder.display import *
 import pickle
 
+logging.basicConfig(filename='output_train.log', level=logging.INFO)
+
 
 def np_now(x: torch.Tensor): return x.detach().cpu().numpy()
 
