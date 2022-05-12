@@ -264,6 +264,7 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
             pickle.dump(history_data, history_file)
             history_file.close()
             stream(msg)
+            logging.info("Train    : "+msg)
 
             # Backup or save model as appropriate
             if backup_every != 0 and step % backup_every == 0 :
