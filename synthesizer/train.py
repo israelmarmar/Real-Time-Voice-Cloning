@@ -1,5 +1,6 @@
 from datetime import datetime
 from functools import partial
+import logging
 import os
 from pathlib import Path
 
@@ -58,9 +59,11 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
         device = torch.device("cpu")
 
     print("Using device:", device)
+    logging.info("Train    : Using device:", device)
 
     if os.path.isfile(history_train):
         print("\nGetting history data...\n")
+        logging.info("Train    : \nGetting history data...\n")
 
         history_file = open(history_train,  'rb')
         history_data = pickle.load(history_file)
@@ -90,11 +93,19 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
         loss_window = ValueWindow(100)
 
         print("Checkpoint path: {}".format(weights_fpath))
+        logging.info("Train    : Checkpoint path: {}".format(weights_fpath))
+        
         print("Loading training data from: {}".format(metadata_fpath))
+        logging.info("Train    : Loading training data from: {}".format(metadata_fpath))
+
+
         print("Using model: Tacotron")
+        logging.info("Train    : Tacotron")
 
         # Instantiate Tacotron Model
         print("\nInitialising Tacotron Model...\n")
+        logging.info("Train    : Initialising Tacotron Model...")
+
         model = Tacotron(embed_dims=hparams.tts_embed_dims,
                         num_chars=len(symbols),
                         encoder_dims=hparams.tts_encoder_dims,
@@ -116,6 +127,7 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
         # Load the weights
         if force_restart or not weights_fpath.exists():
             print("\nStarting the training of Tacotron from scratch\n")
+            logging.info("Train    : Starting the training of Tacotron from scratch")
             model.save(weights_fpath)
 
             # Embeddings metadata
@@ -129,8 +141,11 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
 
         else:
             print("\nLoading weights at %s" % weights_fpath)
+            logging.info("Train    : Loading weights at %s" % weights_fpath)
+
             model.load(weights_fpath, optimizer)
             print("Tacotron weights loaded from step %d" % model.step)
+            logging.info("Train    : Tacotron weights loaded from step %d" % model.step)
 
         # Initialize the dataset
         metadata_fpath = syn_dir.joinpath("train.txt")
@@ -220,6 +235,7 @@ def train(run_id: str, syn_dir: Path, models_dir: Path, save_every: int,  backup
                 grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), hparams.tts_clip_grad_norm)
                 if np.isnan(grad_norm.cpu()):
                     print("grad_norm was NaN!")
+                    logging.info("Train    : grad_norm was NaN!")
 
             optimizer.step()
 
