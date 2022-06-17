@@ -75,8 +75,10 @@ def train(run_id: str, syn_dir: Path, voc_dir: Path, models_dir: Path, ground_tr
         data_loader = DataLoader(dataset, hp.voc_batch_size, shuffle=True, num_workers=2, collate_fn=collate_vocoder)
         start = time.time()
         running_loss = 0.
+          
+        print(data_loader)
 
-        for i, (x, y, m) in enumerate(data_loader, 1):
+        for i, (x, y, m) in enumerate(data_loader):
             if torch.cuda.is_available():
                 x, m, y = x.cuda(), m.cuda(), y.cuda()
 
