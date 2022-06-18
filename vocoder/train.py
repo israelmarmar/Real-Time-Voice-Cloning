@@ -72,7 +72,7 @@ def train(run_id: str, syn_dir: Path, voc_dir: Path, models_dir: Path, ground_tr
                   ('Sequence Len', hp.voc_seq_len)])
 
     for epoch in range(1, 350):
-        data_loader = DataLoader(dataset, hp.voc_batch_size, shuffle=True, num_workers=2, collate_fn=collate_vocoder)
+        data_loader = DataLoader(dataset, hp.voc_batch_size, shuffle=True, num_workers=0, collate_fn=collate_vocoder)
         start = time.time()
         running_loss = 0.
 
