@@ -76,10 +76,6 @@ def train(run_id: str, syn_dir: Path, voc_dir: Path, models_dir: Path, ground_tr
         start = time.time()
         running_loss = 0.
 
-        print(syn_dir)
-
-        print(list(data_loader))
-
         for i, (x, y, m) in enumerate(data_loader,1):
             if torch.cuda.is_available():
                 x, m, y = x.cuda(), m.cuda(), y.cuda()
