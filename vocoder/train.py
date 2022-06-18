@@ -78,7 +78,7 @@ def train(run_id: str, syn_dir: Path, voc_dir: Path, models_dir: Path, ground_tr
 
         print(syn_dir)
 
-        print(enumerate(data_loader))
+        print(len(enumerate(data_loader)))
 
         for i, (x, y, m) in enumerate(data_loader,1):
             if torch.cuda.is_available():
